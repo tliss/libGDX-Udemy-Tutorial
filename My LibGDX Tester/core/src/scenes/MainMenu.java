@@ -1,5 +1,6 @@
 package scenes;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.samort7.mylibgdxtester.GameMain;
 
 import helpers.GameInfo;
+import player.Player;
 
 /**
  * Created by taylorliss on 12/4/17.
@@ -19,15 +21,14 @@ public class MainMenu implements Screen {
 
     private Texture bg;
 
-    private Sprite player;
+    private Player player;
 
     //Constructor for thsi class
     public MainMenu(GameMain game) {
         this.game = game;
         bg = new Texture("Game BG.png");
-        player = new Sprite(new Texture("Player 1.png"));
-        player.setPosition((GameInfo.WIDTH/2) - player.getWidth()/2,
-                (GameInfo.HEIGHT/2) - player.getHeight()/2);
+        player = new Player("Player 1.png", GameInfo.WIDTH / 2, GameInfo.HEIGHT /2);
+
     }
 
     @Override

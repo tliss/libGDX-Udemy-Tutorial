@@ -23,7 +23,6 @@ public class GameMain extends Game {
 	@Override
 	public void render () {
 		super.render();
-
 	}
 
 	public SpriteBatch getBatch() {
