@@ -10,6 +10,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import helpers.GameInfo;
+
 /**
  * Created by samor on 12/5/2017.
  */
@@ -29,11 +31,11 @@ public class Player extends Sprite {
     void createBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(getX(), getY());
+        bodyDef.position.set(getX()/GameInfo.PPM, getY()/GameInfo.PPM);
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() / 2, getHeight() / 2);
+        shape.setAsBox((getWidth()/2)/GameInfo.PPM, (getHeight()/2)/GameInfo.PPM);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -44,6 +46,9 @@ public class Player extends Sprite {
     }
 
     public void updatePlayer(){
-        this.setPosition(body.getPosition().x, body.getPosition().y);
+        this.setPosition(
+                body.getPosition().x * GameInfo.PPM,
+                body.getPosition().y * GameInfo.PPM
+        );
     }
 }
