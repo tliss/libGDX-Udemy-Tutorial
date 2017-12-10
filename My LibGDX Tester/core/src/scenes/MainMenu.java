@@ -2,6 +2,7 @@ package scenes;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.samort7.mylibgdxtester.GameMain;
 
+import clouds.Cloud;
 import helpers.GameInfo;
 import player.Player;
 
@@ -32,10 +34,13 @@ public class MainMenu implements Screen {
     public MainMenu(GameMain game) {
         this.game = game;
         box2DCamera = new OrthographicCamera();
+
+        //setTotOrtho call tells the camera how big a window we're using to look at the world
         box2DCamera.setToOrtho(
                 false,
                 GameInfo.WIDTH/GameInfo.PPM,
                 GameInfo.HEIGHT/GameInfo.PPM);
+        //set camera to be in the center
         box2DCamera.position.set(
                 GameInfo.WIDTH/2f,
                 GameInfo.HEIGHT/2f,
@@ -51,7 +56,9 @@ public class MainMenu implements Screen {
         player = new Player(world,
                 "Player 1.png",
                 GameInfo.WIDTH/2,
-                GameInfo.HEIGHT/2 + 250);
+                GameInfo.HEIGHT/2 + 250); //The 250 just starts him a little further up
+
+        Cloud c = new Cloud(world);
     }
 
     @Override
@@ -59,8 +66,25 @@ public class MainMenu implements Screen {
 
     }
 
+    //dt = deltaTime
+    void update(float dt){
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            player.getBody().applyForce(
+                    new Vector2(-5f,0),
+                    player.getBody().getWorldCenter(),
+                    true);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            player.getBody().applyForce(
+                    new Vector2(5f,0),
+                    player.getBody().getWorldCenter(),
+                    true);
+        }
+    }
+
     @Override
     public void render(float delta) {
+
+        update(delta);
 
         player.updatePlayer();
 
