@@ -61,7 +61,9 @@ public class Gameplay implements Screen {
 
     void checkBackgroundsOutOfBounds(){
         for(int i=0; i < bgs.length; i++){
-            if((bgs[i].getY() - bgs[i].getHeight() /2f - 5) > mainCamera.position.y){
+            //if bottom edge of bg is greater than top edge of camera
+            //i.e. -800 - (800 / 2) = -400
+            if((bgs[i].getY() - bgs[i].getHeight() / 2f - 5) > mainCamera.position.y){
                 float newPosition = bgs[i].getHeight() + lastYPosition;
                 bgs[i].setPosition(0, -newPosition);
                 lastYPosition = Math.abs(newPosition);
