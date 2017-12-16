@@ -21,6 +21,7 @@ public class Gameplay implements Screen {
     private Viewport gameViewport;
 
     private Sprite[] bgs;
+    private float lastYPosition;
 
     public Gameplay(GameMain game){
         this.game = game;
@@ -38,20 +39,33 @@ public class Gameplay implements Screen {
         for (int i = 0; i < bgs.length; i++){
             bgs[i] = new Sprite(new Texture("Backgrounds/Game BG.png"));
             bgs[i].setPosition(0, -(i * bgs[i].getHeight()));
+            lastYPosition = Math.abs(bgs[i].getY());
         }
     }
 
-    void update(float dt){
-        moveCamera();
+    void update(float delta){
+        moveCamera(delta);
+        checkBackgroundsOutOfBounds();
     }
 
-    void moveCamera(){
-        mainCamera.position.y -= 1;
+    void moveCamera(float delta){
+        //camera movement is multiplied by delta to make it independent of FPS
+        mainCamera.position.y -= 100 * delta;
     }
 
     void drawBackgrounds() {
         for (int i=0; i < bgs.length; i++) {
             game.getBatch().draw(bgs[i], bgs[i].getX(), bgs[i].getY());
+        }
+    }
+
+    void checkBackgroundsOutOfBounds(){
+        for(int i=0; i < bgs.length; i++){
+            if((bgs[i].getY() - bgs[i].getHeight() /2f - 5) > mainCamera.position.y){
+                float newPosition = bgs[i].getHeight() + lastYPosition;
+                bgs[i].setPosition(0, -newPosition);
+                lastYPosition = Math.abs(newPosition);
+            }
         }
     }
 
