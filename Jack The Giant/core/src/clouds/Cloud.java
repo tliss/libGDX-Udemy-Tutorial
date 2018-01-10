@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
+import helpers.GameInfo;
+
 public class Cloud extends Sprite{
 
     private World world;
@@ -21,6 +23,9 @@ public class Cloud extends Sprite{
     void createBody(){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        bodyDef.position.set((getX() + getWidth() / 2) / GameInfo.PPM,
+                (getY() + getHeight() / 2) / GameInfo.PPM);
     }
 
 }
